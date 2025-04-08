@@ -19,75 +19,13 @@ class Bank
 
     public:
 
-    void new_acc()
-    {
-        cin.ignore();
-        cout<<"\n\tENTER ACCOUNT NUMBER : ";
-        getline(cin,acno);
-        if(acno=="" || acno<="0")
-        {
-            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-        }
-        cout<<"\n\tENTER NAME OF ACCOUNT HOLDER : ";
-        getline(cin,name);
-        cout<<"\n\tENTER CURRENT BALANCE : ";
-        cin>>money;
-        cin.ignore();
-        cout<<"\n\tENTER TYPE OF ACCOUNT : ";
-        getline(cin,type);
-        cout<<"\n\tENTER PIN NUMBER (MUST BE 4 DIGITS ONLY): ";
-        cin>>pin;                
-        int pin_count=pin_digit(pin);
-        while(pin_count!=4)
-        {
-            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-            cout<<"\n\tENTER PIN NUMBER AGAIN : ";
-            cin>>pin;
-            pin_count=pin_digit(pin);
-        }
-    }
+    void new_acc();
 
-    void modify_acc()
-    {
-        cin.ignore();
-        cout<<"\n\tENTER NEW NAME OF ACCOUNT HOLDER : ";
-        getline(cin,name);
-        if(acno=="" || acno<="0")
-        {
-            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-        }
-        cout<<"\n\tENTER NEW TYPE OF ACCOUNT : ";
-        getline(cin,type);
-    }
+    void modify_acc();
 
-    void deposit()
-    {
-        float deposit_amount;
-        cout<<"\n\tENTER AMOUNT OF DEPOSIT : ";
-        cin>>deposit_amount;
-        money+=deposit_amount;
-        cout<<"\n\tYOUR DEPOSIT IS SUCCESSFULL !!"<<endl;
-        total_trans+=deposit_amount;
-        total_dep+=deposit_amount;
-    }
+    void deposit();
 
-    void withdraw()
-    {
-        float withdraw_amount;
-        cout<<"\n\tENTER AMOUNT OF WITHDRAW : ";
-        cin>>withdraw_amount;
-        if(money<withdraw_amount)
-        {
-            cout<<"\n\tYOU CAN NOT WITHDRAW AMOUNT :)";
-        }
-        else
-        {
-            money-=withdraw_amount;
-            cout<<"\n\tYOUR WITHDRAW IS SUCCESSFULL !!"<<endl;
-        }
-        total_trans+=withdraw_amount;
-        total_with+=withdraw_amount;
-    }
+    void withdraw();
 
     void check_balance()
     {
@@ -128,7 +66,80 @@ class Bank
         return pin;
     }  
 
-    void transfer_money(Bank &b)
+    void transfer_money(Bank &b);
+};
+
+    void Bank::new_acc()
+    {
+        cin.ignore();
+        cout<<"\n\tENTER ACCOUNT NUMBER : ";
+        getline(cin,acno);
+        if(acno=="" || acno<="0")
+        {
+            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+        }
+        cout<<"\n\tENTER NAME OF ACCOUNT HOLDER : ";
+        getline(cin,name);
+        cout<<"\n\tENTER CURRENT BALANCE : ";
+        cin>>money;
+        cin.ignore();
+        cout<<"\n\tENTER TYPE OF ACCOUNT : ";
+        getline(cin,type);
+        cout<<"\n\tENTER PIN NUMBER (MUST BE 4 DIGITS ONLY): ";
+        cin>>pin;                
+        int pin_count=pin_digit(pin);
+        while(pin_count!=4)
+        {
+            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+            cout<<"\n\tENTER PIN NUMBER AGAIN : ";
+            cin>>pin;
+            pin_count=pin_digit(pin);
+        }
+    }
+
+    void Bank::modify_acc()
+    {
+        cin.ignore();
+        cout<<"\n\tENTER NEW NAME OF ACCOUNT HOLDER : ";
+        getline(cin,name);
+        if(acno=="" || acno<="0")
+        {
+            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+        }
+        cout<<"\n\tENTER NEW TYPE OF ACCOUNT : ";
+        getline(cin,type);
+    }
+
+    void Bank::deposit()
+    {
+        float deposit_amount;
+        cout<<"\n\tENTER AMOUNT OF DEPOSIT : ";
+        cin>>deposit_amount;
+        money+=deposit_amount;
+        cout<<"\n\tYOUR DEPOSIT IS SUCCESSFULL !!"<<endl;
+        total_trans+=deposit_amount;
+        total_dep+=deposit_amount;
+    }
+
+    void Bank::withdraw()
+    {
+        float withdraw_amount;
+        cout<<"\n\tENTER AMOUNT OF WITHDRAW : ";
+        cin>>withdraw_amount;
+        if(money<withdraw_amount)
+        {
+            cout<<"\n\tYOU CAN NOT WITHDRAW AMOUNT :)";
+        }
+        else
+        {
+            money-=withdraw_amount;
+            cout<<"\n\tYOUR WITHDRAW IS SUCCESSFULL !!"<<endl;
+        }
+        total_trans+=withdraw_amount;
+        total_with+=withdraw_amount;
+    }
+
+    void Bank::transfer_money(Bank &b)
     {
         int tra_money;
         string a;
@@ -157,8 +168,6 @@ class Bank
             }
         }
     }
-};
-
 
 int find_acc(Bank b[],string acc_no,int acc_count)
 {
