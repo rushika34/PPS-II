@@ -6,31 +6,21 @@
 using namespace std;
 int pin_digit(int);
 
-class Bank
+class Person
 {
+    protected:
+
     string acno;
     string name;
     float money;
     string type;
     int pin;
-    float total_trans;
-    float total_dep;
-    float total_with;
 
     public:
 
     void new_acc();
 
     void modify_acc();
-
-    void deposit();
-
-    void withdraw();
-
-    void check_balance()
-    {
-        cout<<"\n\tHERE YOUR BALANCE IS : "<<money<<endl;
-    }
 
     void acc_detail()
     {
@@ -49,11 +39,9 @@ class Bank
         cout<<"\n\tYOUR ACCOUNT HAS BEEN DELETED !!"<<endl;
     }
 
-    void total_tra_of_day()
+    void check_balance()
     {
-        cout<<"\n\tTOTAL TRANSACTION OF DAY IS : "<<total_trans<<endl;
-        cout<<"\n\tTOTAL DEPOSIT OF DAY IS : "<<total_dep<<endl;
-        cout<<"\n\tTOTAL WITHDRAW OF DAY IS : "<<total_with<<endl;
+        cout<<"\n\tHERE YOUR BALANCE IS : "<<money<<endl;
     }
 
     string ret_acc_no()
@@ -61,15 +49,77 @@ class Bank
         return acno;
     }
 
+    string ret_name()
+    {
+        return name;
+    }
+
+    float ret_money()
+    {
+        return money;
+    }
+
+    string ret_type()
+    {
+        return type;
+    }
+
     int ret_pin()
     {
         return pin;
     }  
 
-    void transfer_money(Bank &b);
+    void set_acno(string n_acno)
+    {
+        acno=n_acno;
+    }
+
+    void set_name(string n_name)
+    {
+        name=n_name;
+    }
+
+    void set_money(float n_money)
+    {
+        money=n_money;
+    }
+
+    void set_type(string n_type)
+    {
+        type=n_type;
+    }
+
+    void set_pin(int n_pin)
+    {
+        pin=n_pin;
+    }
+
 };
 
-    void Bank::new_acc()
+class Bank : public Person
+{
+    float total_trans;
+    float total_dep;
+    float total_with;
+
+    public:
+
+    void deposit();
+
+    void withdraw();
+
+    void total_tra_of_day()
+    {
+        cout<<"\n\tTOTAL TRANSACTION OF DAY IS : "<<total_trans<<endl;
+        cout<<"\n\tTOTAL DEPOSIT OF DAY IS : "<<total_dep<<endl;
+        cout<<"\n\tTOTAL WITHDRAW OF DAY IS : "<<total_with<<endl;
+    }
+
+    void transfer_money(Bank &b);
+
+};
+
+    void Person::new_acc()
     {
         cin.ignore();
         cout<<"\n\tENTER ACCOUNT NUMBER : ";
@@ -97,57 +147,53 @@ class Bank
         }
     }
 
-    void Bank::modify_acc()
+    void Person::modify_acc()
     {
         int n,pin_count;
         do
         {      
             cout<<"\n\tWHAT DO YOU WANT TO MODIFY? "<<endl;
+            cout<<"\n\t1. USERNAME "<<endl;
+            cout<<"\n\t2. ACCOUNT TYPE "<<endl;
+            cout<<"\n\t3. PIN N0. "<<endl;
+            cout<<"\n\t4. EXIT "<<endl;
+            cout<<"\n\tSELECT YOUR OPTION (1-4) : ";
+            cin>>n;
         
-        cout<<"\n\t1. USERNAME "<<endl;
-        cout<<"\n\t2. ACCOUNT TYPE "<<endl;
-        cout<<"\n\t3. PIN N0. "<<endl;
-        cout<<"\n\t4. EXIT "<<endl;
-        cout<<"\n\tSELECT YOUR OPTION (1-4) : ";
-        cin>>n;
-        switch(n){
-            case 1:
-                cin.ignore();
-                cout<<"\n\tENTER NEW NAME OF ACCOUNT HOLDER : ";
-                getline(cin,name);
-                break;
-            case 2:
-            cin.ignore();
-            cout<<"\n\tENTER NEW TYPE OF ACCOUNT : ";
-            getline(cin,type);
-            break;
-            case 3:
-            
-            cout<<"\n\tENTER NEW PIN : ";
-            cin>>pin;
-             pin_count=pin_digit(pin);
-        while(pin_count!=4)
-        {
-            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-            cout<<"\n\tENTER PIN NUMBER AGAIN : ";
-            cin>>pin;
-            pin_count=pin_digit(pin);
-        }
-        break;
-        default:
-                if(n!=4)
-                {
-                    cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
-                }   
-                else
-                {
+            switch(n)
+            {
+                case 1:
+                    cin.ignore();
+                    cout<<"\n\tENTER NEW NAME OF ACCOUNT HOLDER : ";
+                    getline(cin,name);
                     break;
-                }  
-
-
-        }
-
-       
+                case 2:
+                    cin.ignore();
+                    cout<<"\n\tENTER NEW TYPE OF ACCOUNT : ";
+                    getline(cin,type);
+                    break;
+                case 3:
+                    cout<<"\n\tENTER NEW PIN : ";
+                    cin>>pin;
+                    pin_count=pin_digit(pin);
+                    while(pin_count!=4)
+                    {
+                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                        cout<<"\n\tENTER PIN NUMBER AGAIN : ";
+                        cin>>pin;
+                        pin_count=pin_digit(pin);
+                    }
+                    break;
+                default:
+                    if(n!=4)
+                    {
+                        cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
+                    }   
+                    else
+                    {
+                        break;
+                    }  
+            }
         }while(n!=4);
     }
 
@@ -167,7 +213,7 @@ class Bank
         float withdraw_amount;
         cout<<"\n\tENTER AMOUNT OF WITHDRAW : ";
         cin>>withdraw_amount;
-        if(money<withdraw_amount)
+        if(ret_money()<withdraw_amount)
         {
             cout<<"\n\tYOU CAN NOT WITHDRAW AMOUNT :)";
         }
@@ -182,7 +228,7 @@ class Bank
 
     void Bank::transfer_money(Bank &b)
     {
-        int tra_money;
+        float tra_money;
         string a;
         cout<<"\n\tENTER MONEY YOU WANT TO TRANSFER : ";
         cin>>tra_money;
@@ -222,6 +268,7 @@ int find_acc(Bank b[],string acc_no,int acc_count)
     return -1;
 
 }
+
 int pin_digit(int pin_no)
 {
     int digit=0;
@@ -238,387 +285,446 @@ int pin_digit(int pin_no)
 int main()
 {
     string acc_no;
-    int n,index,pin_no;
+    int n,index,pin_no,x;
     Bank b[100];
     int acc_count=0;
     do
     {      
-    cout<<"\n\t\t\t=========================================";
-    cout<<"\n\t\t\t          BANK MANAGMENT SYSTEM";
-    cout<<"\n\t\t\t=========================================";
-    cout<<"\n\t1. CREATE NEW ACCOUNT "<<endl;
-    cout<<"\n\t2. MODIFY AN ACCOUNT "<<endl;
-    cout<<"\n\t3. DEPOSIT AMOUNT "<<endl;
-    cout<<"\n\t4. WITHDRAW AMOUNT "<<endl;
-    cout<<"\n\t5. CHECK BALANCE OF ACCOUNT "<<endl;
-    cout<<"\n\t6. ACCOUNT DETAILS "<<endl;
-    cout<<"\n\t7. CLOSE AN ACCOUNT "<<endl;
-    cout<<"\n\t8. CHECK YOUR WHOLE DAY TRANSACTION "<<endl;
-    cout<<"\n\t9. DO YOU WANT TO TRANSFER MONEY ?"<<endl;
-    cout<<"\n\t10. EXIT "<<endl;
-    cout<<"\n\tSELECT YOUR OPTION (1-10) : ";
-    cin>>n;
+        cout<<"\n\t\t\t=========================================";
+        cout<<"\n\t\t\t          BANK MANAGMENT SYSTEM";
+        cout<<"\n\t\t\t=========================================";
+        cout<<"\n\t1. CREATE NEW ACCOUNT "<<endl;
+        cout<<"\n\t2. MODIFY AN ACCOUNT "<<endl;
+        cout<<"\n\t3. DEPOSIT AMOUNT "<<endl;
+        cout<<"\n\t4. WITHDRAW AMOUNT "<<endl;
+        cout<<"\n\t5. CHECK BALANCE OF ACCOUNT "<<endl;
+        cout<<"\n\t6. ACCOUNT DETAILS "<<endl;
+        cout<<"\n\t7. CLOSE AN ACCOUNT "<<endl;
+        cout<<"\n\t8. CHECK YOUR WHOLE DAY TRANSACTION "<<endl;
+        cout<<"\n\t9. DO YOU WANT TO TRANSFER MONEY ?"<<endl;
+        cout<<"\n\t10. EXIT "<<endl;
+        cout<<"\n\tSELECT YOUR OPTION (1-10) : ";
+        cin>>n;
+        
+        switch(n)
+        {
+            case 1:
+                    b[acc_count].new_acc();
+                    acc_count++;
+                break;
     
-    switch(n)
-    {
-        case 1:
-                b[acc_count].new_acc();
-                acc_count++;
-            break;
-
-        case 2:
-                cout<<"\n\tENTER ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
+            case 2:
+                    cout<<"\n\tENTER ACCOUNT NUMBER :  ";
+                    cin>>acc_no;
+                    x=find_acc(b,acc_no,acc_count);
+                    if(x==-1)
                     {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    
+                        cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
                     }
                     else
                     {
-                        if(pin_no!=b[index].ret_pin())
+                        if(acc_no=="" || acc_no<="0")
                         {
-                            cout<<"\n\t PIN IS INVALID!!";
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
                         }
                         else
                         {
-                            if(index==-1)
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
                             {
-                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }
-                            else if(b[index].ret_acc_no()=="")
-                            {
-                                cout<<"\n\tACCOUNT DELETED.";
-                            }
-                            else
-                            {
-                                b[index].modify_acc();
-                            }        
-                        }
-                    }
-                }
-            break;
-
-        case 3:
-                cout<<"\n\tENTER ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    if(index==-1){
-                        cout<<"\n\tENTER VALID ACCOUNT NO.";
-                    }
-                    else {
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    }
-                    else
-                    {
-                        if(pin_no!=b[index].ret_pin())
-                        {
-                            cout<<"\n\tPIN IS INVALID!!";
-                        }
-                        else
-                        {
-                            if(index==-1)
-                            {
-                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }
-                            else if(b[index].ret_acc_no()=="")
-                            {
-                                cout<<"\n\tACCOUNT DELETED.";
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            
                             }
                             else
                             {
-                                b[index].deposit();
-                            }             
-                        }
-                    }
-                }  
-            }
-            break;
-
-        case 4:
-                cout<<"\n\tENTER ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    }
-                    else
-                    {
-                        if(pin_no!=b[index].ret_pin())
-                        {
-                            cout<<"\n\tPIN IS INVALID!!";
-                        }
-                        else
-                        {
-                            if(index==-1)
-                            {
-                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }
-                            else if(b[index].ret_acc_no()=="")
-                            {
-                                cout<<"\n\tACCOUNT DELETED.";
-                            }
-                            else
-                            {
-                                b[index].withdraw();
-                            }            
-                        }
-                    } 
-                }    
-            break;
-
-        case 5:
-                cout<<"\n\tENTER ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    }
-                    else
-                    {
-                        if(pin_no!=b[index].ret_pin())
-                        {
-                            cout<<"\n\tPIN IS INVALID!!";
-                        }
-                        else
-                        {
-                            if(index==-1)
-                            {
-                            cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }
-                            else if(b[index].ret_acc_no()=="")
-                            {
-                                cout<<"\n\tACCOUNT DELETED.";
-                            }
-                            else
-                            {
-                                b[index].check_balance();
-                            }
-                        }
-                    }
-                }
-            break;
-                
-        case 6:
-                cout<<"\n\tENTER ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    }
-                    else
-                    {
-                        if(pin_no!=b[index].ret_pin())
-                        {
-                            cout<<"\n\tPIN IS INVALID!!";
-                        }
-                        else
-                        {
-                            if(index==-1)
-                            {
-                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }  
-                            else if(b[index].ret_acc_no()=="")
-                            {
-                                cout<<"\n\tACCOUNT DELETED.";
-                            }
-                            else
-                            {
-                                b[index].acc_detail();
-                            } 
-                        } 
-                    }
-                }       
-            break;
-
-        case 7:
-                cout<<"\n\tENTER ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    }
-                    else
-                    {
-                        if(pin_no!=b[index].ret_pin())
-                        {
-                            cout<<"\n\tPIN IS INVALID!!";
-                        }
-                        else
-                        {
-                            if(index==-1)
-                            {
-                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }
-                            else
-                            {
-                                b[index].delete_acc();
-                            }
-                        }
-                    } 
-                }  
-            break; 
-
-        case 8:
-                cout<<"\n\tENTER ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    }
-                    else
-                    {
-                        if(pin_no!=b[index].ret_pin())
-                        {
-                            cout<<"\n\tPIN IS INVALID!!";
-                        }
-                        else
-                        {
-                            if(index==-1)
-                            {
-                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }
-                            else
-                            {
-                                b[index].total_tra_of_day();
-                            }
-                        }
-                    }
-                }    
-            break;
-                
-        case 9:
-                cout<<"\n\tENTER YOUR ACCOUNT NUMBER :  ";
-                cin>>acc_no;
-                if(acc_no=="" || acc_no<="0")
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                    index=find_acc(b,acc_no,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    cin>>pin_no;
-                    int pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                    }
-                    else
-                    {
-                        if(pin_no!=b[index].ret_pin())
-                        {
-                            cout<<"\n\tPIN IS INVALID!!";
-                        }
-                        else
-                        {
-                            if(index==-1)
-                            {
-                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                            }
-                            else
-                            {
-                                string rec_acc;
-                                int rec_index;
-                                cin.ignore();
-                                cout<<"\n\tENTER RECEIVER ACCOUNT NUMBER : ";
-                                getline(cin,rec_acc);
-                                rec_index=find_acc(b,rec_acc,acc_count);
-                                if(rec_index==-1)
+                                if(pin_no!=b[index].ret_pin())
                                 {
-                                    cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    cout<<"\n\t PIN IS INVALID!!";
                                 }
                                 else
                                 {
-                                    b[rec_index].transfer_money(b[index]);
+                                    if(index==-1)
+                                    {
+                                        cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }
+                                    else if(b[index].ret_acc_no()=="")
+                                    {
+                                        cout<<"\n\tACCOUNT DELETED.";
+                                    }
+                                    else
+                                    {
+                                        b[index].modify_acc();
+                                    }        
                                 }
                             }
                         }
                     }
-                }   
-            break;  
-                  
-        default:
-                if(n!=10)
-                {
-                    cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
-                }   
-                else
-                {
-                    break;
-                }                                
-    }
+                break;
+    
+            case 3:
+                    cout<<"\n\tENTER ACCOUNT NUMBER :  ";
+                    cin>>acc_no;
+                    x=find_acc(b,acc_no,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                    }
+                    else
+                    {
+                        if(acc_no=="" || acc_no<="0")
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            }
+                            else
+                            {
+                                if(pin_no!=b[index].ret_pin())
+                                {
+                                    cout<<"\n\tPIN IS INVALID!!";
+                                }
+                                else
+                                {
+                                    if(index==-1)
+                                    {
+                                        cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }
+                                    else if(b[index].ret_acc_no()=="")
+                                    {
+                                        cout<<"\n\tACCOUNT DELETED.";
+                                    }
+                                    else
+                                    {
+                                        b[index].deposit();
+                                    }             
+                                }
+                            }
+                        }
+                    }  
+                break;
+    
+            case 4:
+                    cout<<"\n\tENTER ACCOUNT NUMBER :  ";
+                    cin>>acc_no;
+                    x=find_acc(b,acc_no,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                    }
+                    else
+                    {
+                        if(acc_no=="" || acc_no<="0" )
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            }
+                            else
+                            {
+                                if(pin_no!=b[index].ret_pin())
+                                {
+                                    cout<<"\n\tPIN IS INVALID!!";
+                                }
+                                else
+                                {
+                                    if(index==-1)
+                                    {
+                                        cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }
+                                    else if(b[index].ret_acc_no()=="")
+                                    {
+                                        cout<<"\n\tACCOUNT DELETED.";
+                                    }
+                                    else
+                                    {
+                                        b[index].withdraw();
+                                    }            
+                                }
+                            } 
+                        }   
+                    } 
+                break;
+    
+            case 5:
+                    cout<<"\n\tENTER ACCOUNT NUMBER :  ";
+                    cin>>acc_no;
+                    x=find_acc(b,acc_no,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                    }
+                    else
+                    {
+                        if(acc_no=="" || acc_no<="0")
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            }
+                            else
+                            {
+                                if(pin_no!=b[index].ret_pin())
+                                {
+                                    cout<<"\n\tPIN IS INVALID!!";
+                                }
+                                else
+                                {
+                                    if(index==-1)
+                                    {
+                                    cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }
+                                    else if(b[index].ret_acc_no()=="")
+                                    {
+                                        cout<<"\n\tACCOUNT DELETED.";
+                                    }
+                                    else
+                                    {
+                                        b[index].check_balance();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                break;
+                    
+            case 6:
+                    cout<<"\n\tENTER ACCOUNT NUMBER :  ";
+                    cin>>acc_no;
+                    x=find_acc(b,acc_no,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                    }
+                    else
+                    {
+                        if(acc_no=="" || acc_no<="0")
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            }
+                            else
+                            {
+                                if(pin_no!=b[index].ret_pin())
+                                {
+                                    cout<<"\n\tPIN IS INVALID!!";
+                                }
+                                else
+                                {
+                                    if(index==-1)
+                                    {
+                                        cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }  
+                                    else if(b[index].ret_acc_no()=="")
+                                    {
+                                        cout<<"\n\tACCOUNT DELETED.";
+                                    }
+                                    else
+                                    {
+                                        b[index].acc_detail();
+                                    } 
+                                } 
+                            }
+                        }  
+                    }     
+                break;
+    
+            case 7:
+                    cout<<"\n\tENTER ACCOUNT NUMBER :  ";
+                    cin>>acc_no;
+                    x=find_acc(b,acc_no,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                    }
+                    else
+                    {
+                        if(acc_no=="" || acc_no<="0")
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            }
+                            else
+                            {
+                                if(pin_no!=b[index].ret_pin())
+                                {
+                                    cout<<"\n\tPIN IS INVALID!!";
+                                }
+                                else
+                                {
+                                    if(index==-1)
+                                    {
+                                        cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }
+                                    else
+                                    {
+                                        b[index].delete_acc();
+                                    }
+                                }
+                            } 
+                        }  
+                    }
+                    break; 
+        
+                case 8:
+                        cout<<"\n\tENTER ACCOUNT NUMBER :  ";
+                        cin>>acc_no;
+                        x=find_acc(b,acc_no,acc_count);
+                        if(x==-1)
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                        if(acc_no=="" || acc_no<="0")
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            }
+                            else
+                            {
+                                if(pin_no!=b[index].ret_pin())
+                                {
+                                    cout<<"\n\tPIN IS INVALID!!";
+                                }
+                                else
+                                {
+                                    if(index==-1)
+                                    {
+                                        cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }
+                                    else
+                                    {
+                                        b[index].total_tra_of_day();
+                                    }
+                                }
+                            }
+                        }  
+                    }  
+                break;
+                    
+            case 9:
+                    cout<<"\n\tENTER YOUR ACCOUNT NUMBER :  ";
+                    cin>>acc_no;
+                    x=find_acc(b,acc_no,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                    }
+                    else
+                    {
+                        if(acc_no=="" || acc_no<="0")
+                        {
+                            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+                        }
+                        else
+                        {
+                            index=find_acc(b,acc_no,acc_count);
+                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                            cin>>pin_no;
+                            int pin_count=pin_digit(pin_no);
+                            if(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            }
+                            else
+                            {
+                                if(pin_no!=b[index].ret_pin())
+                                {
+                                    cout<<"\n\tPIN IS INVALID!!";
+                                }
+                                else
+                                {
+                                    if(index==-1)
+                                    {
+                                        cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                    }
+                                    else
+                                    {
+                                        string rec_acc;
+                                        int rec_index;
+                                        cin.ignore();
+                                        cout<<"\n\tENTER RECEIVER ACCOUNT NUMBER : ";
+                                        getline(cin,rec_acc);
+                                        rec_index=find_acc(b,rec_acc,acc_count);
+                                        if(rec_index==-1)
+                                        {
+                                            cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                                        }
+                                        else
+                                        {
+                                            b[rec_index].transfer_money(b[index]);
+                                        }
+                                    }
+                                }
+                            }
+                        }   
+                    }
+                break;  
+                      
+            default:
+                    if(n!=10)
+                    {
+                        cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
+                    }   
+                    else
+                    {
+                        break;
+                    }                                
+        }
     }while(n<10 && n>0);
 
     return 0;
