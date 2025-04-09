@@ -6,21 +6,31 @@
 using namespace std;
 int pin_digit(int);
 
-class Person
+class Bank
 {
-    protected:
-
     string acno;
     string name;
     float money;
     string type;
     int pin;
+    float total_trans;
+    float total_dep;
+    float total_with;
 
     public:
 
     void new_acc();
 
     void modify_acc();
+
+    void deposit();
+
+    void withdraw();
+
+    void check_balance()
+    {
+        cout<<"\n\tHERE YOUR BALANCE IS : "<<money<<endl;
+    }
 
     void acc_detail()
     {
@@ -39,75 +49,6 @@ class Person
         cout<<"\n\tYOUR ACCOUNT HAS BEEN DELETED !!"<<endl;
     }
 
-    void check_balance()
-    {
-        cout<<"\n\tHERE YOUR BALANCE IS : "<<money<<endl;
-    }
-
-    string ret_acc_no()
-    {
-        return acno;
-    }
-
-    string ret_name()
-    {
-        return name;
-    }
-
-    float ret_money()
-    {
-        return money;
-    }
-
-    string ret_type()
-    {
-        return type;
-    }
-
-    int ret_pin()
-    {
-        return pin;
-    }  
-
-    void set_acno(string n_acno)
-    {
-        acno=n_acno;
-    }
-
-    void set_name(string n_name)
-    {
-        name=n_name;
-    }
-
-    void set_money(float n_money)
-    {
-        money=n_money;
-    }
-
-    void set_type(string n_type)
-    {
-        type=n_type;
-    }
-
-    void set_pin(int n_pin)
-    {
-        pin=n_pin;
-    }
-
-};
-
-class Bank : public Person
-{
-    float total_trans;
-    float total_dep;
-    float total_with;
-
-    public:
-
-    void deposit();
-
-    void withdraw();
-
     void total_tra_of_day()
     {
         cout<<"\n\tTOTAL TRANSACTION OF DAY IS : "<<total_trans<<endl;
@@ -115,11 +56,20 @@ class Bank : public Person
         cout<<"\n\tTOTAL WITHDRAW OF DAY IS : "<<total_with<<endl;
     }
 
-    void transfer_money(Bank &b);
+    string ret_acc_no()
+    {
+        return acno;
+    }
 
+    int ret_pin()
+    {
+        return pin;
+    }  
+
+    void transfer_money(Bank &b);
 };
 
-    void Person::new_acc()
+    void Bank::new_acc()
     {
         cin.ignore();
         cout<<"\n\tENTER ACCOUNT NUMBER : ";
@@ -147,17 +97,58 @@ class Bank : public Person
         }
     }
 
-    void Person::modify_acc()
+    void Bank::modify_acc()
     {
-        cin.ignore();
-        cout<<"\n\tENTER NEW NAME OF ACCOUNT HOLDER : ";
-        getline(cin,name);
-        if(acno=="" || acno<="0")
+        int n,pin_count;
+        do
+        {      
+            cout<<"\n\tWHAT DO YOU WANT TO MODIFY? "<<endl;
+        
+        cout<<"\n\t1. USERNAME "<<endl;
+        cout<<"\n\t2. ACCOUNT TYPE "<<endl;
+        cout<<"\n\t3. PIN N0. "<<endl;
+        cout<<"\n\t4. EXIT "<<endl;
+        cout<<"\n\tSELECT YOUR OPTION (1-4) : ";
+        cin>>n;
+        switch(n){
+            case 1:
+                cin.ignore();
+                cout<<"\n\tENTER NEW NAME OF ACCOUNT HOLDER : ";
+                getline(cin,name);
+                break;
+            case 2:
+            cin.ignore();
+            cout<<"\n\tENTER NEW TYPE OF ACCOUNT : ";
+            getline(cin,type);
+            break;
+            case 3:
+            
+            cout<<"\n\tENTER NEW PIN : ";
+            cin>>pin;
+             pin_count=pin_digit(pin);
+        while(pin_count!=4)
         {
-            cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
+            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+            cout<<"\n\tENTER PIN NUMBER AGAIN : ";
+            cin>>pin;
+            pin_count=pin_digit(pin);
         }
-        cout<<"\n\tENTER NEW TYPE OF ACCOUNT : ";
-        getline(cin,type);
+        break;
+        default:
+                if(n!=4)
+                {
+                    cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
+                }   
+                else
+                {
+                    break;
+                }  
+
+
+        }
+
+       
+        }while(n!=4);
     }
 
     void Bank::deposit()
@@ -176,7 +167,7 @@ class Bank : public Person
         float withdraw_amount;
         cout<<"\n\tENTER AMOUNT OF WITHDRAW : ";
         cin>>withdraw_amount;
-        if(ret_money()<withdraw_amount)
+        if(money<withdraw_amount)
         {
             cout<<"\n\tYOU CAN NOT WITHDRAW AMOUNT :)";
         }
@@ -191,7 +182,7 @@ class Bank : public Person
 
     void Bank::transfer_money(Bank &b)
     {
-        float tra_money;
+        int tra_money;
         string a;
         cout<<"\n\tENTER MONEY YOU WANT TO TRANSFER : ";
         cin>>tra_money;
@@ -231,7 +222,6 @@ int find_acc(Bank b[],string acc_no,int acc_count)
     return -1;
 
 }
-
 int pin_digit(int pin_no)
 {
     int digit=0;
@@ -279,13 +269,6 @@ int main()
         case 2:
                 cout<<"\n\tENTER ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                int x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
                 if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
@@ -324,19 +307,11 @@ int main()
                         }
                     }
                 }
-            }
             break;
 
         case 3:
                 cout<<"\n\tENTER ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
                 if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
@@ -344,6 +319,10 @@ int main()
                 else
                 {
                     index=find_acc(b,acc_no,acc_count);
+                    if(index==-1){
+                        cout<<"\n\tENTER VALID ACCOUNT NO.";
+                    }
+                    else {
                     cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
                     cin>>pin_no;
                     int pin_count=pin_digit(pin_no);
@@ -373,21 +352,14 @@ int main()
                             }             
                         }
                     }
-                }
-            }  
+                }  
+            }
             break;
 
         case 4:
                 cout<<"\n\tENTER ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
-                if(acc_no=="" || acc_no<="0" )
+                if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
                 }
@@ -423,20 +395,12 @@ int main()
                             }            
                         }
                     } 
-                }   
-            } 
+                }    
             break;
 
         case 5:
                 cout<<"\n\tENTER ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
                 if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
@@ -474,19 +438,11 @@ int main()
                         }
                     }
                 }
-            }
             break;
                 
         case 6:
                 cout<<"\n\tENTER ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
                 if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
@@ -523,20 +479,12 @@ int main()
                             } 
                         } 
                     }
-                }  
-            }     
+                }       
             break;
 
         case 7:
                 cout<<"\n\tENTER ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
                 if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
@@ -570,19 +518,11 @@ int main()
                         }
                     } 
                 }  
-            }
             break; 
 
         case 8:
                 cout<<"\n\tENTER ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
                 if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
@@ -615,20 +555,12 @@ int main()
                             }
                         }
                     }
-                }  
-            }  
+                }    
             break;
                 
         case 9:
                 cout<<"\n\tENTER YOUR ACCOUNT NUMBER :  ";
                 cin>>acc_no;
-                x=find_acc(b,acc_no,acc_count);
-                if(x==-1)
-                {
-                    cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
-                }
-                else
-                {
                 if(acc_no=="" || acc_no<="0")
                 {
                     cout<<"\n\tPLEASE ENTER VALID ACCOUNT NUMBER!!"<<endl;
@@ -675,7 +607,6 @@ int main()
                         }
                     }
                 }   
-            }
             break;  
                   
         default:
