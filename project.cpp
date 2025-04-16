@@ -2,12 +2,12 @@
 #include<iomanip>
 #include<string>
 #include<cmath>
+#include<cstdlib>
 
 using namespace std;
 
 int pin_digit(int);
-
- long long number=100000000001;
+long long number=100000000001;
 class Person
 {
     protected:
@@ -16,12 +16,10 @@ class Person
     string name;
     float money;
     string type;
-    int pin;
-    
+    int pin; 
     string username;
-    public:
 
-    // void new_acc();
+    public:
 
     void modify_acc();
 
@@ -67,12 +65,16 @@ class Person
     {
         return type;
     }
-    string ret_username(){
+    string ret_username()
+    {
         return username;
     }
-    void set_username(string u_name){
-          username=u_name;
+
+    void set_username(string u_name)
+    {
+        username=u_name;
     }
+
     int ret_pin()
     {
         return pin;
@@ -104,7 +106,6 @@ class Person
     }
 
 };
-class Bank;
 
 class Bank : public Person
 {
@@ -112,8 +113,11 @@ class Bank : public Person
     float total_dep;
     float total_with;
     static int  acc_count;
+
     public:
+
     void new_acc();
+
     void deposit();
 
     void withdraw();
@@ -128,18 +132,17 @@ class Bank : public Person
     void transfer_money(Bank &b);
    
 };
-   int Bank::acc_count=0;
+
+int Bank::acc_count=0;
+
     void Bank::new_acc()
     {
         cin.ignore();
         
-         acno = std::to_string(number);
-         number++;
+        acno = to_string(number);
+        number++;
         cout<<"\n\tENTER NAME OF ACCOUNT HOLDER : ";
         getline(cin,name);
-        // cout<<"\n\tENTER USERNAME : ";
-        // getline(cin,username);
-        
         cout<<"\n\tENTER INITIAL BALANCE : ";
         cin>>money;
         cin.ignore();
@@ -150,23 +153,8 @@ class Bank : public Person
             cin>>money;
             cin.ignore();
         }
-
-       
         cout<<"\n\tENTER TYPE OF ACCOUNT : ";
-    
         getline(cin,type);
-        
-        // cout<<"\n\tENTER PIN NUMBER (MUST BE 4 DIGITS ONLY): ";
-        // cin>>pin;                
-        // int pin_count=pin_digit(pin);
-        
-        // while(pin_count!=4)
-        // {
-        //     cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-        //     cout<<"\n\tENTER PIN NUMBER AGAIN : ";
-        //     cin>>pin;
-        //     pin_count=pin_digit(pin);
-        // }
         acc_count++;
     }
 
@@ -174,12 +162,14 @@ class Bank : public Person
     {
         int n,pin_count;
         do
-        {      
-            cout<<"\n\tWHAT DO YOU WANT TO MODIFY? "<<endl;
+        {
+            system("cls");
+            cout<<"\n\t****WHAT DO YOU WANT TO MODIFY?****"<<endl;
             cout<<"\n\t1. ACCOUNT HOLDER NAME "<<endl;
             cout<<"\n\t2. ACCOUNT TYPE "<<endl;
             cout<<"\n\t3. PIN N0. "<<endl;
-            cout<<"\n\t4. EXIT "<<endl;
+            cout<<"\n\t4. USERNAME "<<endl;
+            cout<<"\n\t5. EXIT "<<endl;
             cout<<"\n\tSELECT YOUR OPTION (1-4) : ";
             cin>>n;
         
@@ -189,12 +179,18 @@ class Bank : public Person
                     cin.ignore();
                     cout<<"\n\tENTER NEW NAME OF ACCOUNT HOLDER : ";
                     getline(cin,name);
+                    cout<<"\n\tNAME CHANGED SUCCESSFULLY!"<<endl;
+                    system("pause");
                     break;
+
                 case 2:
                     cin.ignore();
                     cout<<"\n\tENTER NEW TYPE OF ACCOUNT : ";
                     getline(cin,type);
+                    cout<<"\n\tTYPE CHANGED SUCCESSFULLY!"<<endl;
+                    system("pause");
                     break;
+
                 case 3:
                     cin.ignore();
                     cout<<"\n\tENTER NEW PIN : ";
@@ -207,9 +203,20 @@ class Bank : public Person
                         cin>>pin;
                         pin_count=pin_digit(pin);
                     }
+                    cout<<"\n\tPIN CHANGED SUCCESSFULLY!"<<endl;
+                    system("pause");
                     break;
+
+                case 4:
+                    cin.ignore();
+                    cout<<"\n\tENTER NEW USERNAME : ";
+                    getline(cin,username);
+                    cout<<"\n\tUSERNAME CHANGED SUCCESSFULLY!"<<endl;
+                    system("pause");
+                    break;
+
                 default:
-                    if(n!=4)
+                    if(n!=5)
                     {
                         cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
                     }   
@@ -218,7 +225,7 @@ class Bank : public Person
                         break;
                     }  
             }
-        }while(n!=4);
+        }while(n!=5);
     }
 
     void Bank::deposit()
@@ -226,10 +233,11 @@ class Bank : public Person
         float deposit_amount;
         cout<<"\n\tENTER AMOUNT OF DEPOSIT : ";
         cin>>deposit_amount;
-        while(deposit_amount<=0){
-            cout<<"\n\tENTER AMOUNT GREATER THAN ZERO ";
+        while(deposit_amount<=0)
+        {
+            cout<<"\n\tENTER AMOUNT GREATER THAN ZERO!"<<endl;
             cout<<"\n\tENTER AMOUNT OF DEPOSIT : ";
-        cin>>deposit_amount;
+            cin>>deposit_amount;
         }
         money+=deposit_amount;
         cout<<"\n\tYOUR DEPOSIT IS SUCCESSFULL !!"<<endl;
@@ -248,12 +256,12 @@ class Bank : public Person
         }
         else
         {
-            while(withdraw_amount<=0){
-                cout<<"\n\tENTER AMOUNT GREATER THAN ZERO ";
+            while(withdraw_amount<=0)
+            {
+                cout<<"\n\tENTER AMOUNT GREATER THAN ZERO!"<<endl;
                 cout<<"\n\tENTER AMOUNT YOU WANT TO WITHDRAW : ";
-            cin>>withdraw_amount;
+                cin>>withdraw_amount;
             }
-
             money-=withdraw_amount;
             cout<<"\n\tYOUR WITHDRAW IS SUCCESSFULL !!"<<endl;
         }
@@ -273,27 +281,29 @@ class Bank : public Person
         }
         else
         {
-            if(money<=0){
-                cout<<"\n\tENTER AMOUNT GREATER THAN ZERO"<<endl;
-            }
-            else{
-            cin.ignore();
-            cout<<"\n\tARE YOU SURE ? ENTER YES OR NO : ";
-            getline(cin,a);
-            if(a=="YES" || a=="yes" || a=="Yes")
+            if(money<=0)
             {
-                money+=tra_money;
-                b.money-=tra_money;
-                total_trans+=tra_money;
-                b.total_trans+=tra_money;
-                cout<<"\n\tTRANSACTION SUCCESSFULL!!"<<endl;
+                cout<<"\n\tENTER AMOUNT GREATER THAN ZERO!"<<endl;
             }
             else
             {
-                cout<<"\n\tTRANSACTION CANCELLED!!"<<endl;
+                cin.ignore();
+                cout<<"\n\tARE YOU SURE ? ENTER YES OR NO : ";
+                getline(cin,a);
+                if(a=="YES" || a=="yes" || a=="Yes")
+                {
+                    money+=tra_money;
+                    b.money-=tra_money;
+                    total_trans+=tra_money;
+                    b.total_trans+=tra_money;
+                    cout<<"\n\tTRANSACTION SUCCESSFULL!!"<<endl;
+                }
+                else
+                {
+                    cout<<"\n\tTRANSACTION CANCELLED!!"<<endl;
+                }
             }
         }
-    }
     }
 
 int find_acc(Bank b[],string acc_no,int acc_count)
@@ -306,8 +316,8 @@ int find_acc(Bank b[],string acc_no,int acc_count)
         }
     }
     return -1;
-
 }
+
 int find_username1(Bank b[],string username,int acc_count)
 {
     for(int i=0;i<acc_count;i++)
@@ -318,10 +328,7 @@ int find_username1(Bank b[],string username,int acc_count)
         }
     }
     return -1;
-
 }
-
-
 
 int pin_digit(int pin_no)
 {
@@ -344,6 +351,7 @@ int main()
     int acc_count=0,pin_count;
     do
     {      
+        system("cls");
         cout<<"\n\t\t\t=========================================";
         cout<<"\n\t\t\t          BANK MANAGMENT SYSTEM";
         cout<<"\n\t\t\t=========================================";
@@ -359,36 +367,38 @@ int main()
         cout<<"\n\t10. EXIT "<<endl;
         cout<<"\n\tSELECT YOUR OPTION (1-10) : ";
         cin>>n;
-        
+
         switch(n)
         {
             case 1:
                     b[acc_count].new_acc();
                     cout<<"\n\tENTER USERNAME : ";
                     getline(cin,username);
-                   x=find_username1(b,username,acc_count);
-                   while(x!=-1){
-                    cout<<"\n\tUSERNAME ALREADY EXIST.. ";
-                    cout<<"\n\tENTER USERNAME : ";
-                    getline(cin,username);
                     x=find_username1(b,username,acc_count);
-                   }
-                   b[acc_count].set_username(username);
+                    while(x!=-1)
+                    {
+                        cout<<"\n\tUSERNAME ALREADY EXIST.. ";
+                        cout<<"\n\tENTER USERNAME : ";
+                        getline(cin,username);
+                        x=find_username1(b,username,acc_count);
+                    }
+                    b[acc_count].set_username(username);
                     cout<<"\n\tENTER PIN NUMBER (MUST BE 4 DIGITS ONLY): ";
                     cin>>pin_no;                
-                     pin_count=pin_digit(pin_no);
-        
-        while(pin_count!=4)
-        {
-            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-            cout<<"\n\tENTER PIN NUMBER AGAIN : ";
-            cin>>pin_no;
-            pin_count=pin_digit(pin_no);
-        }
-        b[acc_count].set_pin(pin_no);
-                    cout<<"\n\tACCOUNT CREATED SUCCESSFULLY.";
+                    pin_count=pin_digit(pin_no);
+                    while(pin_count!=4)
+                    {
+                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                        cout<<"\n\tENTER PIN NUMBER AGAIN : ";
+                        cin>>pin_no;
+                        pin_count=pin_digit(pin_no);
+                    }
+                    b[acc_count].set_pin(pin_no);
+                    cout<<"\n\tACCOUNT CREATED SUCCESSFULLY."<<endl;
                     cout<<"\n\tYOUR ACCOUNT NUMBER IS :  "<<b[acc_count].ret_acc_no();
                     acc_count++;
+                    cout<<endl;
+                    system("pause");
                 break;
     
             case 2:
@@ -402,44 +412,36 @@ int main()
                     }
                     else
                     {
-                        
-                        
-                            // index=find_username1(b,username,acc_count);
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            
-                            cin>>pin_no;
-                            cin.ignore();
-                             pin_count=pin_digit(pin_no);
-                            if(pin_count!=4)
-                            {    
-                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                                while(pin_count!=4){
-                                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                                    cin>>pin_no;
-                                   cin.ignore();
-                                    pin_count=pin_digit(pin_no);
-                                }
-                               
-                            
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
                             }
-                            
-                            
-                                if(pin_no!=b[x].ret_pin())
-                                {
-                                    cout<<"\n\t PIN IS INVALID!!";
-                                }
-                                else
-                                {
-                                     b[x].modify_acc();
-                                }        
-                                
-                            
-                        
+                        }
+                        if(pin_no!=b[x].ret_pin())
+                        {
+                            cout<<"\n\t PIN IS INVALID!!";
+                        }
+                        else
+                        {
+                            b[x].modify_acc();
+                        }                  
                     }
+                    cout<<endl;
+                    system("pause");
                 break;
     
             case 3:
-            cin.ignore();
+                    cin.ignore();
                     cout<<"\n\tENTER YOUR USERNAME :  ";
                     getline(cin,username);
                     x=find_username1(b,username,acc_count);
@@ -449,123 +451,99 @@ int main()
                     }
                     else
                     {
-                        
-                        
-                            // index=find_username1(b,username,acc_count);
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            
-                            cin>>pin_no;
-                            cin.ignore();
-                             pin_count=pin_digit(pin_no);
-                            if(pin_count!=4)
-                            {    
-                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                                while(pin_count!=4){
-                                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                                    cin>>pin_no;
-                                   cin.ignore();
-                                    pin_count=pin_digit(pin_no);
-                                }
-                               
-                            
-                            }
-                            
-                            
-                                if(pin_no!=b[x].ret_pin())
-                                {
-                                    cout<<"\n\t PIN IS INVALID!!";
-                                }
-                                else
-                                {
-                                     b[x].deposit();
-                                }        
-                                
-                            
-                        
-                    }
-                break;
-    
-            case 4:
-            cin.ignore();
-            cout<<"\n\tENTER YOUR USERNAME :  ";
-            getline(cin,username);
-            x=find_username1(b,username,acc_count);
-            if(x==-1)
-            {
-                cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
-            }
-            else
-            {
-                
-                
-                    // index=find_username1(b,username,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    
-                    cin>>pin_no;
-                    cin.ignore();
-                     pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {    
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                        while(pin_count!=4){
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            cin>>pin_no;
-                           cin.ignore();
-                            pin_count=pin_digit(pin_no);
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
+                            } 
                         }
-                       
-                    
-                    }
-                    
-                    
                         if(pin_no!=b[x].ret_pin())
                         {
                             cout<<"\n\t PIN IS INVALID!!";
                         }
                         else
                         {
-                             b[x].withdraw();
-                        }        
-                        
-                    
-                
-            }
-        break;
-        
-    
-            case 5:
-            cin.ignore();
-            cout<<"\n\tENTER YOUR USERNAME :  ";
-            getline(cin,username);
-            x=find_username1(b,username,acc_count);
-            if(x==-1)
-            {
-                cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
-            }
-            else
-            {
-                
-                
-                    // index=find_username1(b,username,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    
-                    cin>>pin_no;
-                    cin.ignore();
-                     pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {    
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                        while(pin_count!=4){
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            cin>>pin_no;
-                           cin.ignore();
-                            pin_count=pin_digit(pin_no);
-                        }
-                       
-                    
+                            b[x].deposit();
+                        }            
                     }
-                    
-                    
+                    cout<<endl;
+                    system("pause");
+                break;
+    
+            case 4:
+                    cin.ignore();
+                    cout<<"\n\tENTER YOUR USERNAME :  ";
+                    getline(cin,username);
+                    x=find_username1(b,username,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
+                            }
+                        }
+                        if(pin_no!=b[x].ret_pin())
+                        {
+                            cout<<"\n\t PIN IS INVALID!!";
+                        }
+                        else
+                        {
+                            b[x].withdraw();
+                        }   
+                    }
+                    cout<<endl;
+                    system("pause");
+                break;
+
+            case 5:
+                    cin.ignore();
+                    cout<<"\n\tENTER YOUR USERNAME :  ";
+                    getline(cin,username);
+                    x=find_username1(b,username,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
+                            }
+                        }
                         if(pin_no!=b[x].ret_pin())
                         {
                             cout<<"\n\t PIN IS INVALID!!";
@@ -574,108 +552,13 @@ int main()
                         {
                              b[x].check_balance();
                         }        
-                        
-                    
-                
-            }
-        break;
+                    }
+                    cout<<endl;
+                    system("pause");
+                break;
                     
             case 6:
-            cin.ignore();
-            cout<<"\n\tENTER YOUR USERNAME :  ";
-            getline(cin,username);
-            x=find_username1(b,username,acc_count);
-            if(x==-1)
-            {
-                cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
-            }
-            else
-            {
-                
-                
-                    // index=find_username1(b,username,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    
-                    cin>>pin_no;
                     cin.ignore();
-                     pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {    
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                        while(pin_count!=4){
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            cin>>pin_no;
-                           cin.ignore();
-                            pin_count=pin_digit(pin_no);
-                        }
-                       
-                    
-                    }
-                    
-                    
-                        if(pin_no!=b[x].ret_pin())
-                        {
-                            cout<<"\n\t PIN IS INVALID!!";
-                        }
-                        else
-                        {
-                             b[x].acc_detail();
-                        }        
-                        
-                    
-                
-            }
-        break;
-    
-            case 7:
-            cin.ignore();
-            cout<<"\n\tENTER YOUR USERNAME :  ";
-            getline(cin,username);
-            x=find_username1(b,username,acc_count);
-            if(x==-1)
-            {
-                cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
-            }
-            else
-            {
-                
-                
-                    // index=find_username1(b,username,acc_count);
-                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                    
-                    cin>>pin_no;
-                    cin.ignore();
-                     pin_count=pin_digit(pin_no);
-                    if(pin_count!=4)
-                    {    
-                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                        while(pin_count!=4){
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            cin>>pin_no;
-                           cin.ignore();
-                            pin_count=pin_digit(pin_no);
-                        }
-                       
-                    
-                    }
-                    
-                    
-                        if(pin_no!=b[x].ret_pin())
-                        {
-                            cout<<"\n\t PIN IS INVALID!!";
-                        }
-                        else
-                        {
-                             b[x].delete_acc();
-                        }        
-                        
-                    
-                
-            }
-        break; 
-        
-                case 8:
-                       cin.ignore();
                     cout<<"\n\tENTER YOUR USERNAME :  ";
                     getline(cin,username);
                     x=find_username1(b,username,acc_count);
@@ -685,44 +568,114 @@ int main()
                     }
                     else
                     {
-                        
-                        
-                            // index=find_username1(b,username,acc_count);
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            
-                            cin>>pin_no;
-                            cin.ignore();
-                             pin_count=pin_digit(pin_no);
-                            if(pin_count!=4)
-                            {    
-                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                                while(pin_count!=4){
-                                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                                    cin>>pin_no;
-                                   cin.ignore();
-                                    pin_count=pin_digit(pin_no);
-                                }
-                               
-                            
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
                             }
-                            
-                            
-                                if(pin_no!=b[x].ret_pin())
-                                {
-                                    cout<<"\n\t PIN IS INVALID!!";
-                                }
-                                else
-                                {
-                                     b[x].total_tra_of_day();
-                                }        
-                                
-                            
-                        
+                        }
+                        if(pin_no!=b[x].ret_pin())
+                        {
+                            cout<<"\n\t PIN IS INVALID!!";
+                        }
+                        else
+                        {
+                            b[x].acc_detail();
+                        }        
                     }
+                    cout<<endl;
+                    system("pause");
+                break;
+    
+            case 7:
+                    cin.ignore();
+                    cout<<"\n\tENTER YOUR USERNAME :  ";
+                    getline(cin,username);
+                    x=find_username1(b,username,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
+                            }
+                        }
+                        if(pin_no!=b[x].ret_pin())
+                        {
+                            cout<<"\n\t PIN IS INVALID!!";
+                        }
+                        else
+                        {
+                            b[x].delete_acc();
+                        }     
+                    }
+                    cout<<endl;
+                    system("pause");
+                break; 
+        
+            case 8:
+                    cin.ignore();
+                    cout<<"\n\tENTER YOUR USERNAME :  ";
+                    getline(cin,username);
+                    x=find_username1(b,username,acc_count);
+                    if(x==-1)
+                    {
+                        cout<<"\n\tPLEASE ENTER VALID USERNAME!!"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
+                            }
+                        }
+                        if(pin_no!=b[x].ret_pin())
+                        {
+                            cout<<"\n\t PIN IS INVALID!!";
+                        }
+                        else
+                        {
+                            b[x].total_tra_of_day();
+                        }        
+                    }
+                    cout<<endl;
+                    system("pause");
                 break;
                     
             case 9:
-            cin.ignore();
+                    cin.ignore();
                     cout<<"\n\tENTER YOUR USERNAME :  ";
                     getline(cin,username);
                     x=find_username1(b,username,acc_count);
@@ -732,61 +685,51 @@ int main()
                     }
                     else
                     {
-                       
-                        
-                        
-                            // index=find_acc(b,acc_no,acc_count);
-                            cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                            cin>>pin_no;
-                            cin.ignore();
-                             pin_count=pin_digit(pin_no);
-                             if(pin_count!=4)
-                            {    
-                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
-                                while(pin_count!=4){
-                                    cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
-                                    cin>>pin_no;
-                                   cin.ignore();
-                                    pin_count=pin_digit(pin_no);
-                                }
-                               
-                            
+                        cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                        cin>>pin_no;
+                        cin.ignore();
+                        pin_count=pin_digit(pin_no);
+                        if(pin_count!=4)
+                        {    
+                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
+                            while(pin_count!=4)
+                            {
+                                cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
+                                cin>>pin_no;
+                                cin.ignore();
+                                pin_count=pin_digit(pin_no);
                             }
-                            
-                            
-                                if(pin_no!=b[x].ret_pin())
+                        }
+                        if(pin_no!=b[x].ret_pin())
+                        {
+                            cout<<"\n\tPIN IS INVALID!!";
+                        }
+                        else
+                        {
+                            string rec_acc;
+                            int rec_index;
+                            cout<<"\n\tENTER RECEIVER ACCOUNT NUMBER : ";
+                            getline(cin,rec_acc);
+                            rec_index=find_acc(b,rec_acc,acc_count);
+                            if(rec_index==-1)
+                            {
+                                cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
+                            }
+                            else
+                            {
+                                if(rec_index==x)
                                 {
-                                    cout<<"\n\tPIN IS INVALID!!";
+                                    cout<<"\n\tENTER ANOTHER ACCOUNT!!"<<endl;
                                 }
                                 else
                                 {
-                                    
-                                    
-                                    
-                                        string rec_acc;
-                                        int rec_index;
-                                        
-                                        cout<<"\n\tENTER RECEIVER ACCOUNT NUMBER : ";
-                                        getline(cin,rec_acc);
-                                        rec_index=find_acc(b,rec_acc,acc_count);
-                                        if(rec_index==-1)
-                                        {
-                                            cout<<"\n\tACCOUNT NOT FOUND!!"<<endl;
-                                        }
-                                        else
-                                        {
-                                            if(rec_index==x){
-                                                cout<<"\n\tENTER ANOTHER ACCOUNT!!"<<endl;
-                                            }
-                                            else{
-                                            b[rec_index].transfer_money(b[x]);
-                                            }
-                                        }
-                                    
+                                    b[rec_index].transfer_money(b[x]);
                                 }
-                            
-                         
+                            }
+                        }
                     }
+                    cout<<endl;
+                    system("pause");
                 break;  
                       
             default:
