@@ -360,7 +360,7 @@ int main()
 
     do
     {
-        system("clr");
+        system("cls");
         cout<<"\n\n\t\t\t*****************************************";
         cout<<"\n\t\t\t          BANK MANAGMENT SYSTEM";
         cout<<"\n\t\t\t*****************************************"<<endl;
@@ -399,7 +399,7 @@ int main()
                             x=find_username1(b,username,acc_count);
                             while(x!=-1)
                             {
-                                cout<<"\n\tUSERNAME ALREADY EXIST.. ";
+                                cout<<"\n\tUSERNAME ALREADY EXIST.. "<<endl;
                                 cout<<"\n\tENTER USERNAME : ";
                                 getline(cin,username);
                                 x=find_username1(b,username,acc_count);
@@ -824,7 +824,7 @@ int main()
                         break;
 
                         default:
-                                if(n!=8)
+                                if(n!=4)
                                 {
                                     cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
                                 }   
@@ -835,20 +835,27 @@ int main()
                         
                     }
                 } while (c_num>0 && c_num<4);
-            
+                break;
 
             case 2:
                 int m_num;
                 cin.ignore();
                 cout<<"\n\tENTER YOUR USERNAME : ";
                 getline(cin,manager_name);
-                if(username==m_user_name)
+                if(manager_name!=m_user_name)
+                {
+                    cout<<"\n\tINVALID USERNAME! "<<endl;
+                }
+                else
                 {
                     cout<<"\n\tENTER MANAGER ID : ";
                     getline(cin,manager_id);
-                    if(manager_id==m_id)
+                    if(manager_id!=m_id)
                     {
-                        // Manager m;
+                        cout<<"\n\tYOUR ID IS INVALID "<<endl;
+                    }
+                    else
+                    {
                         cout<<"\n\tYOU ARE ENTERED SUCCESSFULLY!"<<endl;
                         do
                         {
@@ -858,19 +865,25 @@ int main()
                             cout<<"\n\t\t\t##################################"<<endl;
                             cout<<"\n\t1. CHECK TOTAL TRANSACTION OF TODAY"<<endl;
                             cout<<"\n\t2. SEE USERS DETAILS"<<endl;
-                            cout<<"\n\t3. UPDATE MY PROFILE"<<endl;
-                            cout<<"\n\t4. EXIT "<<endl;
-                            cout<<"\n\tSELECT YOUR OPTION (1-4) : ";
+                            cout<<"\n\t3. EXIT "<<endl;
+                            cout<<"\n\tSELECT YOUR OPTION (1-3) : ";
                             cin>>m_num;
     
                             switch (m_num)
                             {
                                 case 1:
-                                    
+                                    //////////////////////////////////////////////////////
                                 break;
     
                                 case 2:
-                                     
+                                    cout<<"\n\t"<<setw(20)<<"ACCOUNT NO."<<setw(30)<<"NAME OF ACCOUNT HOLDER"<<setw(30)<<"ACCOUNT BALANCE"<<setw(20)<<"ACCOUNT TYPE"<<endl;
+                                    cout<<"\n\t----------------------------------------------------------------------------------------------------"<<endl;
+                                    for(int i=0;i<acc_count;i++)
+                                    {
+                                        cout<<"\n\t"<<setw(20)<<b[i].ret_acc_no()<<setw(30)<<b[i].ret_name()<<setw(30)<<b[i].ret_money()<<setw(20)<<b[i].ret_type()<<endl;                                        
+                                    }
+                                    cout<<endl;
+                                    system("pause");
                                 break;
                             
                                 default:
@@ -884,15 +897,14 @@ int main()
                                     } 
                             }
                         } while (m_num<3 && m_num>0);
+                    }
                 }
-                else
-                {
-                    cout<<"\n\tENTER VALID MANAGER ID! "<<endl;
-                }
+                cout<<endl;
+                system("pause");
             break;
 
             default:
-                if(num!=4)
+                if(num!=3)
                 {
                     cout<<"\n\tOPTION IS INVALID PLEASE TRY AGAIN!!"<<endl;
                 }   
@@ -901,7 +913,6 @@ int main()
                     break;
                 }                                       
         }
-    } 
-    }while (num<4 && num>0);
+    }while (num<3 && num>0);
     return 0;
 }
