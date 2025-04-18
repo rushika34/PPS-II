@@ -36,11 +36,11 @@ class Person
 
     void delete_acc()
     {
-        acno="";
-        name="";
+        acno="-";
+        name="-";
         money=0;
-        type="";
-        username="";
+        type="-";
+        username="-";
         cout<<"\n\tYOUR ACCOUNT HAS BEEN DELETED SUCCESSFULLY!!"<<endl;
     }
 
