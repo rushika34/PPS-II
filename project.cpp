@@ -68,6 +68,7 @@ class Person
     {
         return type;
     }
+
     string ret_username()
     {
         return username;
@@ -134,6 +135,20 @@ class Bank : public Person
 
     void transfer_money(Bank &b);
    
+    float ret_total_trans()
+    {
+        return total_trans;
+    }
+
+    float ret_total_with()
+    {
+        return total_with;
+    }
+
+    float ret_total_dep()
+    {
+        return total_dep;
+    }
 };
 
 int Bank::acc_count=0;
@@ -378,7 +393,6 @@ int main()
             case 1:
             do
             {
-
                 system("cls");
                 cout<<"\n\n\t\t\t##################################";
                 cout<<"\n\t\t\t         CUSTOMER PORTAL";
@@ -872,7 +886,34 @@ int main()
                             switch (m_num)
                             {
                                 case 1:
-                                    //////////////////////////////////////////////////////
+                                    cout<<"\n\tBANK TOTAL TRANSACTION OF DAY "<<endl;
+                                    cout<<endl;
+                                    cout<<setw(30)<<"NAME OF ACCOUNT HOLDER"<<setw(20)<<"METHOD"<<setw(20)<<"AMOUNT"<<endl;
+                                    cout<<"----------------------------------------------------------------------"<<endl;
+                                    for(int i=0;i<acc_count;i++)
+                                    {
+                                        cout<<setw(30)<<b[i].ret_name()<<setw(20)<<"TRANSACTION"<<setw(20)<<b[i].ret_total_trans()<<endl;
+                                    }
+                                    cout<<"----------------------------------------------------------------------"<<endl;
+                                    cout<<endl;
+                                    cout<<setw(30)<<"NAME OF ACCOUNT HOLDER"<<setw(20)<<"METHOD"<<setw(20)<<"AMOUNT"<<endl;
+                                    cout<<"----------------------------------------------------------------------"<<endl;
+                                    for(int i=0;i<acc_count;i++)
+                                    {
+                                        cout<<setw(30)<<b[i].ret_name()<<setw(20)<<"WITHDRAW"<<setw(20)<<b[i].ret_total_with()<<endl;
+                                    }
+                                    cout<<"----------------------------------------------------------------------"<<endl;
+                                    cout<<endl;
+                                    cout<<setw(30)<<"NAME OF ACCOUNT HOLDER"<<setw(20)<<"METHOD"<<setw(20)<<"AMOUNT"<<endl;
+                                    cout<<"----------------------------------------------------------------------"<<endl;
+                                    for(int i=0;i<acc_count;i++)
+                                    {
+                                        cout<<setw(30)<<b[i].ret_name()<<setw(20)<<"DEPOSITE"<<setw(20)<<b[i].ret_total_dep()<<endl;
+                                    }
+                                    cout<<"----------------------------------------------------------------------"<<endl;
+                                    cout<<endl;
+                                    cout<<endl;
+                                    system("pause");
                                 break;
     
                                 case 2:
