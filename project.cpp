@@ -1,3 +1,4 @@
+//project of "BANK MANAGMENT SYSTEM" --- c++
 #include<iostream>
 #include<iomanip>
 #include<string>
@@ -166,7 +167,7 @@ int Bank::acc_count=0;
         cin.ignore();
         while(money<500)
         {
-            cout<<"\n\tMINIMUM 500 Rs. REQUIRED. "; 
+            cout<<"\n\tMINIMUM 500 Rs. REQUIRED. "<<endl; 
             cout<<"\n\tENTER INITIAL BALANCE : ";
             cin>>money;
             cin.ignore();
@@ -270,7 +271,7 @@ int Bank::acc_count=0;
         cin>>withdraw_amount;
         if(ret_money()<withdraw_amount)
         {
-            cout<<"\n\tAMOUNT YOU WANT TO WITHDRAW IS GREATER THAN YOUR CURRENT BALANCE :)";
+            cout<<"\n\tAMOUNT YOU WANT TO WITHDRAW IS GREATER THAN YOUR CURRENT BALANCE :)"<<endl;
         }
         else
         {
@@ -455,9 +456,9 @@ int main()
                                 pin_count=pin_digit(pin_no);
                                 if(pin_count!=4)
                                 {    
-                                    cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
                                     while(pin_count!=4)
                                     {
+                                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
                                         cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
                                         cin>>pin_no;
                                         cin.ignore();
@@ -555,9 +556,9 @@ int main()
                                                         pin_count=pin_digit(pin_no);
                                                         if(pin_count!=4)
                                                         {    
-                                                            cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
                                                             while(pin_count!=4)
                                                             {
+                                                                cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
                                                                 cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
                                                                 cin>>pin_no;
                                                                 cin.ignore();
@@ -630,9 +631,9 @@ int main()
                                 pin_count=pin_digit(pin_no);
                                 if(pin_count!=4)
                                 {    
-                                    cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
                                     while(pin_count!=4)
                                     {
+                                        cout<<"\n\tENTER ONLY 4 DIGIT PIN!!"<<endl;
                                         cout<<"\n\tENTER YOUR PIN (MUST BE 4 DIGITS ONLY): ";
                                         cin>>pin_no;
                                         cin.ignore();
